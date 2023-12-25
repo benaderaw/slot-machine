@@ -7,65 +7,56 @@ MAX_BET = 100
 ROWS = 3
 COLS = 3
 
-symbol_count = {
-    "🍒" : 3,
-    "🍊" : 6,
-    "🫒" : 9,
-    "⬜️" : 12,
-}
 
 
+def play():
+    symbol_count = {
+        "🍒" : 3,
+        "🍊" : 6,
+        "🫒" : 9,
+        "⬜️" : 12,
+    }
 
-# press play/bet
-# def play():
-x = []
-randoms = []
-selected = []
+    # press play/bet
+    fruits = []
+    selected_fruits  = []
 
-# append the symbol_count keys in a list based on the values of each key
-for symbol in symbol_count:
-    for _ in range(0, symbol_count[symbol]):
-        x.append(symbol)
+    # append the symbol_count keys in the fruits list based on the values of each key
+    for symbol in symbol_count:
+        for _ in range(0, symbol_count[symbol]):
+            fruits.append(symbol)
 
-print(len(x))
+    # copy fruits
+    fruits_copy = fruits[:]
 
-new_x = x[:]
-new_y = []
+    # get a random number and append 3 unique numbers into the selected list
+    for _ in range(0, 100):
+        # shuffle fruits
+        random.shuffle(fruits_copy)
 
+        # get a random num
+        random_num = random.randrange(0, len(fruits_copy))
 
-# get a random number and append 3 unique numbers into the selected list
-for _ in range(0, 30):
-    for x in new_x:
-        random_x = random.randrange(0, len(new_x))
-        randoms.append(random_x)
+        # if random number already in selected list print message
+        if random_num in selected_fruits :
+            break
+        # if selected already has 3 values stop the loop and print message
+        elif len(selected_fruits ) == 3:
+            # print('selected num is full') 
+            break
+        # if random number is not in the selected list and selected length isn't 3 ann the random number to the selected list
+        else:
+            selected_fruits.append(fruits_copy[random_num])  
+            del fruits_copy[random_num]
+            # print(len(fruits_copy), fruits_copy)
 
-    random_num = random.choice(randoms)
-
-
-
-    # if random number already in selected list print message
-    if random_num in selected:
-        print('random num already in selected num list') 
-    # if selected already has 3 values stop the loop and print message
-    elif len(selected) == 3:
-        # print('selected num is full') 
-        break
-    # if random number is not in the selected list and selected length isn't 3 ann the random number to the selected list
-    else:
-        selected.append(new_x[random_num])         
-        del new_x[random_num]
-        print(len(new_x), new_x)
-
-
-print(selected)
-
- 
+    print(selected_fruits)   
+    return selected_fruits    
 
 
 
 
 
-    
 
 # collect user deposit
 def deposit():
@@ -124,5 +115,7 @@ def main():
     total_bet_amount = bet_per_line * bet_lines
 
     print(f'You are betting ${bet_per_line} per line. Your total bet is ${total_bet_amount}.')
+    play()
+    
 
-# main()
+main()
